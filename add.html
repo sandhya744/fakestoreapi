@@ -1,0 +1,80 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cart Details</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f7f7f7;
+                color: #333;
+                text-align: center;
+                padding: 20px;
+            }
+    
+            img {
+                height: 100px;
+            }
+    
+            .cart-item {
+                border: 1px solid #ccc;
+                padding: 15px;
+                margin: 10px;
+                border-radius: 5px;
+                display: inline-block;
+                width: 300px;
+                text-align: left;
+                background: #fff;
+            }
+    
+            .cart-item img {
+                display: block;
+                margin: 0 auto 10px;
+            }
+    
+            .cart-item h3 {
+                font-size: 1.1rem;
+                margin: 0 0 5px;
+            }
+    
+            .cart-item p {
+                margin: 5px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Your Cart Items</h1>
+        <div id="cart-container"></div>
+        <script>
+            // Retrieve cart details from localStorage
+            const cartData = JSON.parse(localStorage.getItem("details")) || [];
+            
+            const cartContainer = document.getElementById("cart-container");
+    
+            if (cartData.length === 0) {
+                cartContainer.innerHTML = "<p>No items in the cart!</p>";
+            } else {
+                cartData.forEach(item => {
+                    // Create a container for each cart item
+                    const cartItem = document.createElement("div");
+                    cartItem.classList.add("cart-item");
+    
+                    // Add details of the item
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}">
+                        <h3>${item.title}</h3>
+                        <p>Category: ${item.category}</p>
+                        <p>Price: $${item.price}</p>
+                    `;
+    
+                    // Append to the cart container
+                    cartContainer.appendChild(cartItem);
+                });
+            }
+        </script>
+    </body>
+    </html>
+</body>
+</html>

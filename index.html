@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General Page Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #00796b;
+        }
+
+        /* Parent Container */
+        #parent {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Product Card */
+        #parent > div {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        #parent > div:hover {
+            transform: scale(1.05);
+        }
+
+        /* Product Image */
+        img {
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        /* Product Details */
+        div > div {
+            margin: 5px 0;
+        }
+
+        /* Add to Cart Button */
+        button {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #004d40;
+        }
+
+        /* Favorites Button */
+        #fvrt{
+            background-color: rgb(233, 23, 23);
+            color: white;
+            font-size: 1rem;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #fvrt:hover {
+            background-color:red;
+            } 
+    </style>
+</head>
+<body>
+    <button onclick="fun()" id="fvrt">favourites</button>
+    <div id="parent"></div>
+     
+    <script>
+        
+        async function apicall(){
+            emp=[]
+                let data=await fetch("https://fakestoreapi.com/products")
+                let res=await data.json()
+                console.log(res)
+                newdata=res.map((val)=>{
+                    // console.log(val)
+                    let parent=document.getElementById("parent")
+                    let child=document.createElement("div")
+                    let childa=document.createElement("div")
+                    let childb=document.createElement("div")
+                    let childc=document.createElement("div")
+                    let childd=document.createElement("div")
+                    let img=document.createElement("img")
+                    let btn=document.createElement("button")
+                    btn.innerHTML="add to cart"
+                    img.src=val.image
+
+                    child.append(childa,childb,childc,childd,btn,img)
+                    parent.append(child)
+                      
+                    childa.innerHTML=val.id
+                    childb.innerHTML=val.title
+                    childc.innerHTML=val.category
+                    childd.innerHTML=val.price
+
+                    btn.addEventListener("click",function(){
+                    emp.push(val)
+                    localStorage.setItem("details",JSON.stringify(emp))
+                    })
+                })  
+        }apicall()
+
+        function fun(){
+            window.open("add.html")
+        }
+    </script>
+</body>
+</html>
